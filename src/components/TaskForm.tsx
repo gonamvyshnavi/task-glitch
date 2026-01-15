@@ -71,16 +71,17 @@ export default function TaskForm({ open, onClose, onSubmit, existingTitles, init
   const safeTime =
     typeof timeTaken === 'number' && timeTaken > 0 ? timeTaken : 1;
 
-  const payload: Task = {
-    id: initial?.id ?? crypto.randomUUID(),
-    title: title.trim(),
-    revenue: typeof revenue === 'number' ? revenue : 0,
-    timeTaken: safeTime,
-    priority: (priority || 'Medium') as Priority,
-    status: (status || 'Todo') as Status,
-    notes: notes.trim() || undefined,
-    createdAt: initial?.createdAt ?? new Date().toISOString(),
-  };
+  const payload: Omit<Task, 'id'> & { id?: string } = {
+  title: title.trim(),
+  revenue: typeof revenue === 'number' ? revenue : 0,
+  timeTaken: safeTime,
+  priority: (priority || 'Medium') as Priority,
+  status: (status || 'Todo') as Status,
+  notes: notes.trim() || undefined,
+  createdAt: initial?.createdAt ?? new Date().toISOString(),
+  ...(initial ? { id: initial.id } : {}),
+};
+
 
   onSubmit(payload);
   onClose();
