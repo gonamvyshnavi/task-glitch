@@ -13,12 +13,19 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+
+    "types": ["node"]   // ✅ ADD THIS
   },
-  "include": ["src"],
+
+  "include": [
+    "src",
+    "vite.config.ts"    // ✅ ADD THIS
+  ],
+
   "references": [{ "path": "./tsconfig.node.json" }]
 }
-
